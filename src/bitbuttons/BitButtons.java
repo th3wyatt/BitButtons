@@ -121,7 +121,7 @@ class TextPanel extends JPanel {
     }
 }
 
-//output for the numbers converted from binary.  Converts to Decimal, Hexiaecimal
+//output for the numbers converted from binary.  Converts to Decimal, Hexadecimal
 // and Octal.
 class OutputPanel extends JPanel {
 
@@ -242,7 +242,7 @@ class SubmitButton extends JPanel {
 
 }
 
-//Panel used to orgainize and contain the GUI elements in a top-down format
+//Panel used to organize and contain the GUI elements in a top-down format
 class BitButtonPanel extends JPanel {
 
      CheckPanel checkPanel = new CheckPanel(this);
