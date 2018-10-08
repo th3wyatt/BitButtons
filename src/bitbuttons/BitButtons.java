@@ -5,8 +5,6 @@
 package bitbuttons;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Enumeration;
@@ -26,7 +24,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 //Base Frame class.  Determines the primary attributes of the GUI frame
 class FrameBase extends JFrame {
 
-    static final int WIDTH = 200, HEIGHT = 200;
+    private static final int WIDTH = 200, HEIGHT = 200;
 
     public FrameBase() {
         super("Frame Base");
@@ -43,7 +41,7 @@ class FrameBase extends JFrame {
         setFrame(width, height);
     }
 
-    public void display() {
+    void display() {
         setVisible(true);
     }
 
@@ -59,7 +57,6 @@ class CheckPanel extends JPanel implements ItemListener {
 
     private BitButtonPanel sourcePanel;
     private JCheckBox[] checkBoxArray;
-    private int bitsTotal;
     private String labels[] = {"128", "64", "32", "16", "8", "4", "2", "1"};
 
     public CheckPanel(BitButtonPanel sourcePanel) {
@@ -89,8 +86,8 @@ class CheckPanel extends JPanel implements ItemListener {
         }
     }
     //totals up the bits and coverts from binary to decimal
-    public int getBitsTotal() {
-        bitsTotal = 0;
+    int getBitsTotal() {
+        int bitsTotal = 0;
         for (JCheckBox aCheckBoxArray : checkBoxArray) {
             if (aCheckBoxArray.isSelected()) {
 
@@ -104,10 +101,9 @@ class CheckPanel extends JPanel implements ItemListener {
 //defines the text boxes used to represent the binary number
 class TextPanel extends JPanel {
 
-    private BitButtonPanel sourcePanel;
     private JTextField[] textFieldArray;
 
-    public TextPanel(BitButtonPanel sourcePanel) {
+    public TextPanel() {
 
         textFieldArray = new JTextField[8];
         for (int i = 0; i < textFieldArray.length; i++) {
@@ -119,7 +115,7 @@ class TextPanel extends JPanel {
 
     }
 
-    public void setTextField(int index, String text) {
+    void setTextField(int index, String text) {
 
         textFieldArray[index].setText(text);
     }
@@ -129,17 +125,12 @@ class TextPanel extends JPanel {
 // and Octal.
 class OutputPanel extends JPanel {
 
-    private BitButtonPanel sourcePanel;
-    private JLabel decimalFieldLabel = new JLabel("Decimal", JLabel.CENTER);
     private JTextField decimalFieldText = new JTextField("", JTextField.CENTER);
-    private JLabel hexFieldLabel = new JLabel("Hexadecimal", JLabel.CENTER);
     private JTextField hexFieldText = new JTextField("", JTextField.CENTER);
-    private JLabel octFieldLabel = new JLabel("Octal", JLabel.CENTER);
     private JTextField octFieldText = new JTextField("", JTextField.CENTER);
 
-    public OutputPanel(BitButtonPanel sourcePanel) {
+    public OutputPanel() {
 
-        this.sourcePanel = sourcePanel;
         decimalFieldText.setHorizontalAlignment(JTextField.CENTER);
         decimalFieldText.setEditable(false);
         hexFieldText.setHorizontalAlignment(JTextField.CENTER);
@@ -147,26 +138,29 @@ class OutputPanel extends JPanel {
         octFieldText.setHorizontalAlignment(JTextField.CENTER);
         octFieldText.setEditable(false);
         setLayout(new GridLayout(6, 1));
+        JLabel decimalFieldLabel = new JLabel("Decimal", JLabel.CENTER);
         add(decimalFieldLabel);
         add(decimalFieldText);
+        JLabel hexFieldLabel = new JLabel("Hexadecimal", JLabel.CENTER);
         add(hexFieldLabel);
         add(hexFieldText);
+        JLabel octFieldLabel = new JLabel("Octal", JLabel.CENTER);
         add(octFieldLabel);
         add(octFieldText);
     }
-    public void setDecimal(int number){
+    void setDecimal(int number){
         this.decimalFieldText.setText(String.valueOf(number));
         this.hexFieldText.setText("");
         this.octFieldText.setText("");
     }
     
-    public void setHexadecimal(int number){
+    void setHexadecimal(int number){
         this.hexFieldText.setText(Integer.toHexString(number));
         this.octFieldText.setText("");
         this.decimalFieldText.setText("");
     }
     
-    public void setOctal(int number){
+    void setOctal(int number){
         this.octFieldText.setText(Integer.toOctalString(number));
         this.hexFieldText.setText("");
         this.decimalFieldText.setText("");
@@ -177,16 +171,14 @@ class OutputPanel extends JPanel {
 //radio buttons used to choose between the three number systems.
 class RadioButtonPanel extends JPanel {
 
-    private BitButtonPanel sourcePanel;
-    private JRadioButton decimalRadio = new JRadioButton("Decimal", true);
-    private JRadioButton hexadecimalRadio = new JRadioButton("Hexadecimal");
-    private JRadioButton octalRadio = new JRadioButton("Octal");
     private ButtonGroup buttonGroup;
 
-    public RadioButtonPanel(BitButtonPanel sourcePanel) {
-        this.sourcePanel = sourcePanel;
+    public RadioButtonPanel() {
+        JRadioButton decimalRadio = new JRadioButton("Decimal", true);
         add(decimalRadio);
+        JRadioButton hexadecimalRadio = new JRadioButton("Hexadecimal");
         add(hexadecimalRadio);
+        JRadioButton octalRadio = new JRadioButton("Octal");
         add(octalRadio);
 
         buttonGroup = new ButtonGroup();
@@ -195,7 +187,7 @@ class RadioButtonPanel extends JPanel {
         buttonGroup.add(octalRadio);
     }
 
-    public String getRadio() {
+    String getRadio() {
         String returnButton = "Decimal";
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements();
                 buttons.hasMoreElements();) {
@@ -214,11 +206,11 @@ class RadioButtonPanel extends JPanel {
 //button that initiates the conversion
 class SubmitButton extends JPanel {
 
-    BitButtonPanel sourcePanel;
-    private JButton submitButton = new JButton("Submit");
+    private BitButtonPanel sourcePanel;
 
     public SubmitButton(BitButtonPanel sourcePanel) {
         this.sourcePanel = sourcePanel;
+        JButton submitButton = new JButton("Submit");
         submitButton.setHorizontalAlignment(JButton.CENTER);
         add(submitButton);
 
@@ -253,11 +245,10 @@ class SubmitButton extends JPanel {
 //Panel used to orgainize and contain the GUI elements in a top-down format
 class BitButtonPanel extends JPanel {
 
-    public CheckPanel checkPanel = new CheckPanel(this);
-    public TextPanel textPanel = new TextPanel(this);
-    public OutputPanel outputPanel = new OutputPanel(this);
-    public RadioButtonPanel radioPanel = new RadioButtonPanel(this);
-    public SubmitButton submitPanel = new SubmitButton(this);
+     CheckPanel checkPanel = new CheckPanel(this);
+     TextPanel textPanel = new TextPanel();
+     OutputPanel outputPanel = new OutputPanel();
+     RadioButtonPanel radioPanel = new RadioButtonPanel();
     //builds out the GUI in the main panel
 
     public BitButtonPanel() {
@@ -277,6 +268,7 @@ class BitButtonPanel extends JPanel {
         add(checkPanel);
         add(textPanel);
         add(radioPanel);
+        SubmitButton submitPanel = new SubmitButton(this);
         add(submitPanel);
         add(outputPanel);
 
