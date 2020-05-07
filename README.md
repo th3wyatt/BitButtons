@@ -1,2 +1,2 @@
 # BitButtons
-Small java GUI app that helps learn binary
+Small java GUI app that helps the user learn binary
